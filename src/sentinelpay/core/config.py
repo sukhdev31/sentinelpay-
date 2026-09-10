@@ -36,4 +36,3 @@ def get_settings() -> Settings:
     """Return one cached and validated settings instance."""
 
     return Settings()
-

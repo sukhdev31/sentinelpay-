@@ -105,4 +105,3 @@ class ScoringRepository:
             scored_at=event.scored_at,
             latency_ms=event.latency_ms,
         )
-

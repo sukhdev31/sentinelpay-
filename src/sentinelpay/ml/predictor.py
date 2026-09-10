@@ -38,8 +38,7 @@ class FraudModelPredictor:
 
         graph = min(
             1.0,
-            0.15 * features.device_account_count_24h
-            + 0.35 * features.ip_confirmed_fraud_count_30d,
+            0.15 * features.device_account_count_24h + 0.35 * features.ip_confirmed_fraud_count_30d,
         )
         if self._bundle is None:
             return ModelScores(0.0, 0.0, round(graph, 4), "untrained-baseline")

@@ -26,9 +26,7 @@ def upgrade() -> None:
         sa.Column("notes", sa.Text(), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
         sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
-        sa.ForeignKeyConstraint(
-            ["decision_event_id"], ["decision_events.id"], ondelete="RESTRICT"
-        ),
+        sa.ForeignKeyConstraint(["decision_event_id"], ["decision_events.id"], ondelete="RESTRICT"),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("decision_event_id"),
     )
