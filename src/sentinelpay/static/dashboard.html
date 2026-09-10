@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SentinelPay Analyst Console</title>
+  <style>
+    :root{color-scheme:dark;--ink:#e7edf4;--muted:#91a3b6;--panel:#111b26;--edge:#263747;--cyan:#45d7cf;--red:#ff6868;--amber:#ffc857}
+    *{box-sizing:border-box}body{margin:0;background:#08111a;color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+    header{padding:28px 5vw;border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;align-items:center}
+    h1{margin:0;font-size:24px;letter-spacing:.02em}.mark{color:var(--cyan)}main{max-width:1200px;margin:auto;padding:30px 5vw}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:20px}
+    .metric{font-size:34px;font-weight:700}.muted{color:var(--muted)}table{width:100%;border-collapse:collapse;margin-top:24px}th,td{text-align:left;padding:14px;border-bottom:1px solid var(--edge)}
+    button{background:var(--cyan);border:0;padding:9px 14px;border-radius:7px;font-weight:700;cursor:pointer}input{background:#071019;border:1px solid var(--edge);color:var(--ink);padding:9px;border-radius:7px}
+    .decline{color:var(--red)}.review{color:var(--amber)}@media(max-width:760px){.grid{grid-template-columns:1fr}header{align-items:flex-start;gap:14px;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header><h1><span class="mark">Sentinel</span>Pay · Analyst Console</h1><div><input id="key" type="password" placeholder="API key"><button onclick="loadCases()">Connect</button></div></header>
+  <main><div class="grid"><section class="card"><div class="muted">Transactions scored</div><div class="metric" id="total">—</div></section><section class="card"><div class="muted">Open cases</div><div class="metric" id="open">—</div></section><section class="card"><div class="muted">Declined</div><div class="metric decline" id="declined">—</div></section></div>
+  <table><thead><tr><th>Transaction</th><th>Decision</th><th>Risk</th><th>Top reason</th></tr></thead><tbody id="cases"><tr><td colspan="4" class="muted">Enter the configured API key to load decisions.</td></tr></tbody></table></main>
+  <script>
+    const q=s=>document.querySelector(s);fetch('/api/v1/health').then(r=>r.ok?r.json():Promise.reject()).then(()=>q('#api').textContent='Healthy').catch(()=>q('#api').textContent='Offline');
+    async function loadCases(){const h={'X-API-Key':q('#key').value},[s,d]=await Promise.all([fetch('/api/v1/analytics/summary',{headers:h}),fetch('/api/v1/analytics/recent-decisions',{headers:h})]);if(!s.ok||!d.ok){q('#cases').innerHTML='<tr><td colspan="4" class="decline">Unable to load analytics. Check the API key and database.</td></tr>';return}const summary=await s.json(),rows=await d.json();q('#total').textContent=summary.total_scored;q('#open').textContent=summary.open_cases;q('#declined').textContent=summary.declined;q('#cases').innerHTML=rows.map(x=>`<tr><td>${x.transaction_id}</td><td class="${x.decision==='DECLINE'?'decline':x.decision==='REVIEW'?'review':''}">${x.decision}</td><td>${x.risk_score}</td><td>${x.reason_codes[0]||'No rule hit'}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">No decisions yet.</td></tr>'}
+  </script>
+</body></html>

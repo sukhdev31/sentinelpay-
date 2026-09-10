@@ -1,0 +1,6 @@
+{
+  "roc_auc": 0.6803,
+  "average_precision": 0.1478,
+  "test_fraud_rate": 0.0544,
+  "test_rows": 6250.0
+}

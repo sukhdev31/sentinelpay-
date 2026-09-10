@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m ruff format --check src tests migrations
+      - run: python -m ruff check src tests migrations
+      - run: python -m mypy src
+      - run: python -m pytest --cov=sentinelpay --cov-report=term-missing
+        env:
+          DATABASE_URL: postgresql+asyncpg://ignored:ignored@localhost/ignored
+          REDIS_URL: redis://localhost:6379/0
+          PERSISTENCE_ENABLED: "false"
+          API_KEY_REQUIRED: "false"
+      - run: python -m sentinelpay.ml.train --rows 3000 --output /tmp/model.joblib
+      - run: python -m sentinelpay.ml.evaluate --rows 1000 --model /tmp/model.joblib
