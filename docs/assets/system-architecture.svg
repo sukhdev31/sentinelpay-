@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">SentinelPay system architecture</title><desc id="desc">Transaction scoring architecture from API validation through four detection signals, decision engine, audit store, and analyst review.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 9 3 0 6Z" fill="#5c7c8d"/></marker><linearGradient id="head"><stop stop-color="#0b1e2e"/><stop offset="1" stop-color="#10323a"/></linearGradient></defs>
+  <rect width="1400" height="760" rx="26" fill="#07111c"/>
+  <text x="70" y="76" fill="#f4f8fb" font-family="Inter,Segoe UI,Arial" font-size="38" font-weight="800">How SentinelPay makes a decision</text>
+  <text x="70" y="112" fill="#91a8b6" font-family="Inter,Segoe UI,Arial" font-size="19">Every outcome is explainable, versioned and stored for analyst review.</text>
+  <g stroke="#5c7c8d" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M262 222H363"/><path d="M587 222H680"/><path d="M890 222H985"/>
+    <path d="M785 292V365"/><path d="M785 425V500"/>
+    <path d="M1095 292V365"/><path d="M1095 425V500"/>
+    <path d="M985 544H895"/><path d="M680 544H586"/><path d="M365 544H270"/>
+  </g>
+  <g font-family="Inter,Segoe UI,Arial" text-anchor="middle">
+    <g><rect x="70" y="174" width="192" height="96" rx="16" fill="#102333" stroke="#294457"/><text x="166" y="214" fill="#55dfd2" font-size="18" font-weight="700">TRANSACTION</text><text x="166" y="242" fill="#c5d2da" font-size="16">Client request</text></g>
+    <g><rect x="363" y="174" width="224" height="96" rx="16" fill="#102333" stroke="#294457"/><text x="475" y="214" fill="#55dfd2" font-size="18" font-weight="700">FASTAPI GATEWAY</text><text x="475" y="242" fill="#c5d2da" font-size="16">Auth · Validation</text></g>
+    <g><rect x="680" y="174" width="210" height="118" rx="16" fill="url(#head)" stroke="#38bcb5" stroke-width="2"/><text x="785" y="218" fill="#55dfd2" font-size="18" font-weight="700">FEATURE SERVICE</text><text x="785" y="247" fill="#c5d2da" font-size="16">Point-in-time signals</text><text x="785" y="271" fill="#7e98a8" font-size="14">Freshness checked</text></g>
+    <g><rect x="985" y="174" width="220" height="118" rx="16" fill="#102333" stroke="#294457"/><text x="1095" y="213" fill="#55dfd2" font-size="18" font-weight="700">4 DETECTORS</text><text x="1095" y="242" fill="#c5d2da" font-size="15">Rules · ML · Anomaly</text><text x="1095" y="267" fill="#c5d2da" font-size="15">Graph-risk proxy</text></g>
+    <g><rect x="680" y="365" width="210" height="60" rx="15" fill="#17302e" stroke="#55dfd2"/><text x="785" y="402" fill="#e9fbf8" font-size="18" font-weight="700">DECISION ENGINE</text></g>
+    <g><rect x="985" y="365" width="220" height="60" rx="15" fill="#2d2520" stroke="#ffca67"/><text x="1095" y="402" fill="#ffe7b6" font-size="18" font-weight="700">POLICY + REASONS</text></g>
+    <g><rect x="680" y="500" width="215" height="88" rx="16" fill="#102333" stroke="#294457"/><text x="787" y="538" fill="#55dfd2" font-size="18" font-weight="700">AUDIT STORE</text><text x="787" y="564" fill="#c5d2da" font-size="15">PostgreSQL</text></g>
+    <g><rect x="985" y="500" width="220" height="88" rx="16" fill="#102333" stroke="#294457"/><text x="1095" y="538" fill="#ffca67" font-size="18" font-weight="700">REVIEW QUEUE</text><text x="1095" y="564" fill="#c5d2da" font-size="15">Human oversight</text></g>
+    <g><rect x="365" y="500" width="221" height="88" rx="16" fill="#102333" stroke="#294457"/><text x="475" y="538" fill="#55dfd2" font-size="18" font-weight="700">ANALYST CONSOLE</text><text x="475" y="564" fill="#c5d2da" font-size="15">Cases + analytics</text></g>
+    <g><rect x="70" y="500" width="200" height="88" rx="16" fill="#102333" stroke="#294457"/><text x="170" y="538" fill="#55dfd2" font-size="18" font-weight="700">FEEDBACK</text><text x="170" y="564" fill="#c5d2da" font-size="15">Learning loop</text></g>
+  </g>
+  <g font-family="Inter,Segoe UI,Arial" font-size="16">
+    <rect x="70" y="652" width="1260" height="56" rx="13" fill="#0c1c29" stroke="#22394a"/>
+    <circle cx="105" cy="680" r="7" fill="#55dfd2"/><text x="124" y="686" fill="#b7c7d0">Idempotent scoring</text>
+    <circle cx="345" cy="680" r="7" fill="#55dfd2"/><text x="364" y="686" fill="#b7c7d0">Stable reason codes</text>
+    <circle cx="606" cy="680" r="7" fill="#55dfd2"/><text x="625" y="686" fill="#b7c7d0">Versioned policy</text>
+    <circle cx="830" cy="680" r="7" fill="#55dfd2"/><text x="849" y="686" fill="#b7c7d0">Immutable decisions</text>
+    <circle cx="1090" cy="680" r="7" fill="#ffca67"/><text x="1109" y="686" fill="#b7c7d0">Manual review</text>
+  </g>
+</svg>
